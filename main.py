@@ -1,3 +1,5 @@
+import os
+from fnmatch import fnmatch 
 from PIL import Image
 from PIL.ExifTags import TAGS
  
@@ -11,7 +13,7 @@ class JpegImage:
         ret = {}
         i = Image.open(self.filename)
         self.exif = i._getexif()
-        print('info: {}'.format(self.exif))
+        #print('info: {}'.format(self.exif))
         return self.exif
 
     def get_field(self,field) :
@@ -24,7 +26,22 @@ class JpegImage:
 
  
 if __name__ == '__main__':
+    path = ".\\pictures"
+    pattern = "*.jpg"
+    my_img_dictionary = dict()
     
-    myImage = JpegImage(filename='.\\pictures\\DSCF9476.JPG')
-    time = myImage.get_field('DateTime')
-    print(time)
+    for element in os.listdir(path):
+        if fnmatch(element, pattern):
+            img_name = path + '\\' + element
+
+            myImage = JpegImage(filename=img_name)
+            time = myImage.get_field('DateTime')
+
+            if time in my_img_dictionary:
+                my_img_dictionary[time].append(img_name)
+            else:
+                my_img_dictionary[time] = [img_name]
+
+    for x, y in my_img_dictionary.items():
+        print(x, y)
+
