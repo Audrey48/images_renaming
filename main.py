@@ -1,5 +1,7 @@
 import os
 from fnmatch import fnmatch 
+import shutil
+
 from PIL import Image
 from PIL.ExifTags import TAGS
  
@@ -26,13 +28,15 @@ class JpegImage:
 
  
 if __name__ == '__main__':
-    path = ".\\pictures"
+    input_path = ".\\pictures"
+    output_path = ".\\result"
     pattern = "*.jpg"
     my_img_dictionary = dict()
-    
-    for element in os.listdir(path):
+
+    #parse all images
+    for element in os.listdir(input_path):
         if fnmatch(element, pattern):
-            img_name = path + '\\' + element
+            img_name = input_path + '\\' + element
 
             myImage = JpegImage(filename=img_name)
             time = myImage.get_field('DateTime')
@@ -42,6 +46,22 @@ if __name__ == '__main__':
             else:
                 my_img_dictionary[time] = [img_name]
 
+    #rename images
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     for x, y in my_img_dictionary.items():
         print(x, y)
 
+        if len(y) != 1 :
+            print("Too many images for key " + x)
+
+        else:
+            name = x.replace(":", "-")
+            name = name.replace(" ", "_")
+            name = name + ".JPG"
+            #print(name)
+            shutil.copy2(y[0], ".\\result\\"+name)
+
+
+    
