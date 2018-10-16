@@ -1,6 +1,7 @@
-#input and output images paths
+#input, output and copied images paths
 pictures/
 result/
+copied/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
