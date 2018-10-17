@@ -9,7 +9,7 @@ This program can be used to automatically rename images with their capture Date 
 
 **Note** : I used this program to manage thousands of images restored from a formated HDD.
 
-##How to use this program
+## How to use this program
 
 ### Install
 To run this program, you have to install:
